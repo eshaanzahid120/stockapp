@@ -33,7 +33,7 @@ public class Gui extends JFrame {
 	    private JLabel finniftycmp;
 	    private JLabel bankniftycmp;
 	    
-	    JLabel bankexlow;
+	   JLabel bankexlow;
 	  JLabel midcaplow;
 	  JLabel finniftylow;
 	  JLabel bankniftylow;

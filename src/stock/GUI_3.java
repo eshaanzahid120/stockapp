@@ -35,8 +35,38 @@ import javax.swing.AbstractAction;
 import java.awt.event.ActionEvent;
 import javax.swing.Action;
 import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.awt.Insets;
 
 public class GUI_3 extends JFrame {
+	JTabbedPane tab_pane;
+	
+	String vixstr;
+    String bankexstr;
+    String sensexstr;
+    String bankniftystr;
+    String nifty50str;
+    String finniftystr;
+    String midcapstr;
+    
+  String bankexuprange;
+  String bankexlowrange;
+  
+  String sensexuprange;
+  String sensexlowrange;
+  
+  String bankniftyuprange;
+  String bankniftylowrange;
+  
+  String nifty50uprange;
+  String nifty50lowrange;
+  
+  String finniftyuprange;
+  String finniftylowrange;
+  
+  String midcapuprange;
+  String midcaplowrange;
+	
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
@@ -60,10 +90,40 @@ public class GUI_3 extends JFrame {
 	//fuck you
 	/**
 	 * Create the frame.
+	 * @throws IOException 
 	 */
-	public GUI_3() {
+	public GUI_3() throws IOException {
+		
+		vixstr = Function.getvix();
+		bankexstr = Function.getbankex();
+		sensexstr = Function.getsensex();
+		bankniftystr = Function.getbanknifty();
+		nifty50str = Function.getnifty();
+		finniftystr = Function.getfinnifty();
+		midcapstr = Function.getmidcap();
+		//
+		bankexuprange = Function.getupRange(vixstr,bankexstr);
+		bankexlowrange = Function.getlowRange(vixstr,bankexstr);
+		
+		sensexuprange = Function.getupRange(vixstr,sensexstr);
+		sensexlowrange = Function.getlowRange(vixstr,sensexstr);
+		
+		bankniftyuprange = Function.getupRange(vixstr,bankniftystr);
+		bankniftylowrange = Function.getlowRange(vixstr,bankniftystr);
+		
+		nifty50uprange = Function.getupRange(vixstr,nifty50str);
+		nifty50lowrange = Function.getlowRange(vixstr,nifty50str);
+		
+		finniftyuprange = Function.getupRange(vixstr,finniftystr);
+		finniftylowrange = Function.getlowRange(vixstr,finniftystr);
+		
+		midcapuprange = Function.getupRange(vixstr,midcapstr);
+		midcaplowrange = Function.getlowRange(vixstr,midcapstr);
+		
+		
+		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 1134, 744);
+		setBounds(100, 100, 1214, 744);
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(9, 9, 9));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -78,13 +138,18 @@ public class GUI_3 extends JFrame {
 		gradientPanel.setLayout(null);
 		
 		JPanel Navigation_panel = new JPanel();
-		Navigation_panel.setBounds(10, 10, 60, 470);
+		Navigation_panel.setBounds(10, 10, 60, 519);
 		Navigation_panel.setBorder(new LineBorder(new Color(0, 32, 51), 4, true));
 		Navigation_panel.setBackground(new Color(0, 20, 32));
 		gradientPanel.add(Navigation_panel);
 		Navigation_panel.setLayout(null);
 		
 		JButton btn = new JButton("New button");
+		btn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				tab_pane.setSelectedIndex(0);
+			}
+		});
 		Image photo = new ImageIcon(this.getClass().getResource("/home_icon.png")).getImage();
 		btn.setBounds(6, 176, 48, 50);
 		Navigation_panel.add(btn);
@@ -93,6 +158,11 @@ public class GUI_3 extends JFrame {
 		btn.setIcon(new ImageIcon(photo));
 		
 		JButton btn2 = new JButton("New button");
+		btn2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				tab_pane.setSelectedIndex(1);
+			}
+		});
 		Image photo2 = new ImageIcon(this.getClass().getResource("/report_icon.png")).getImage();
 		btn2.setOpaque(true);
 		btn2.setBackground(new Color(9, 9, 9));
@@ -100,10 +170,10 @@ public class GUI_3 extends JFrame {
 		Navigation_panel.add(btn2);
 		btn2.setIcon(new ImageIcon(photo2));
 		
-		JTabbedPane tab_pane = new JTabbedPane(JTabbedPane.TOP);
+		tab_pane = new JTabbedPane(JTabbedPane.TOP);
 		tab_pane.setBorder(new LineBorder(new Color(0, 0, 0)));
 		tab_pane.setBackground(new Color(0, 20, 32));
-		tab_pane.setBounds(82, 10, 1004, 540);
+		tab_pane.setBounds(82, 10, 1004, 519);
 		gradientPanel.add(tab_pane);
 		
 		JPanel Home_panel = new JPanel();
@@ -118,12 +188,384 @@ public class GUI_3 extends JFrame {
 		home_gradient.setLayout(null);
 		
 		JPanel Data_panel = new JPanel();
-		Data_panel.setLayout(null);
 		Data_panel.setOpaque(false);
 		Data_panel.setBorder(new LineBorder(new Color(0, 32, 51), 4, true));
 		Data_panel.setBackground(new Color(0, 20, 32));
-		Data_panel.setBounds(6, 96, 992, 371);
+		Data_panel.setBounds(6, 96, 992, 391);
 		home_gradient.add(Data_panel);
+		Data_panel.setLayout(new GridLayout(1, 0, 0, 0));
+		
+		JPanel marker_panel = new JPanel();
+		marker_panel.setOpaque(false);
+		marker_panel.setBorder(new LineBorder(new Color(0, 0, 0)));
+		Data_panel.add(marker_panel);
+		GridBagLayout gbl_marker_panel = new GridBagLayout();
+		gbl_marker_panel.columnWidths = new int[]{0, 0};
+		gbl_marker_panel.rowHeights = new int[]{0, 0, 0, 0};
+		gbl_marker_panel.columnWeights = new double[]{1.0, Double.MIN_VALUE};
+		gbl_marker_panel.rowWeights = new double[]{1.0, 1.0, 1.0, Double.MIN_VALUE};
+		marker_panel.setLayout(gbl_marker_panel);
+		
+		JPanel panel_7 = new JPanel();
+		panel_7.setBorder(new LineBorder(new Color(255, 255, 255)));
+		panel_7.setOpaque(false);
+		GridBagConstraints gbc_panel_7 = new GridBagConstraints();
+		gbc_panel_7.insets = new Insets(0, 0, 5, 0);
+		gbc_panel_7.fill = GridBagConstraints.BOTH;
+		gbc_panel_7.gridx = 0;
+		gbc_panel_7.gridy = 0;
+		marker_panel.add(panel_7, gbc_panel_7);
+		panel_7.setLayout(new GridLayout(0, 1, 0, 0));
+		
+		JLabel lblNewLabel = new JLabel("HIGH");
+		lblNewLabel.setForeground(new Color(255, 255, 255));
+		lblNewLabel.setBackground(new Color(255, 255, 255));
+		lblNewLabel.setFont(new Font("Georgia", Font.BOLD, 18));
+		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		panel_7.add(lblNewLabel);
+		
+		JPanel panel_8 = new JPanel();
+		panel_8.setBorder(new LineBorder(new Color(255, 255, 255)));
+		panel_8.setOpaque(false);
+		GridBagConstraints gbc_panel_8 = new GridBagConstraints();
+		gbc_panel_8.insets = new Insets(0, 0, 5, 0);
+		gbc_panel_8.fill = GridBagConstraints.BOTH;
+		gbc_panel_8.gridx = 0;
+		gbc_panel_8.gridy = 1;
+		marker_panel.add(panel_8, gbc_panel_8);
+		panel_8.setLayout(new GridLayout(0, 1, 0, 0));
+		
+		JLabel lblCmp = new JLabel("CMP");
+		lblCmp.setForeground(new Color(255, 255, 255));
+		lblCmp.setBackground(new Color(255, 255, 255));
+		lblCmp.setFont(new Font("Georgia", Font.BOLD, 18));
+		lblCmp.setHorizontalTextPosition(SwingConstants.CENTER);
+		lblCmp.setHorizontalAlignment(SwingConstants.CENTER);
+		panel_8.add(lblCmp);
+		
+		JPanel panel_9 = new JPanel();
+		panel_9.setBorder(new LineBorder(new Color(255, 255, 255)));
+		panel_9.setOpaque(false);
+		GridBagConstraints gbc_panel_9 = new GridBagConstraints();
+		gbc_panel_9.fill = GridBagConstraints.BOTH;
+		gbc_panel_9.gridx = 0;
+		gbc_panel_9.gridy = 2;
+		marker_panel.add(panel_9, gbc_panel_9);
+		panel_9.setLayout(new GridLayout(0, 1, 0, 0));
+		
+		JLabel lblLow = new JLabel("LOW");
+		lblLow.setForeground(new Color(255, 255, 255));
+		lblLow.setBackground(new Color(255, 255, 255));
+		lblLow.setFont(new Font("Georgia", Font.BOLD, 18));
+		lblLow.setHorizontalAlignment(SwingConstants.CENTER);
+		panel_9.add(lblLow);
+		
+		
+		//Bankex
+		JPanel bankex_data_panel = new JPanel();
+		bankex_data_panel.setOpaque(false);
+		bankex_data_panel.setBorder(new LineBorder(new Color(0, 0, 0)));
+		Data_panel.add(bankex_data_panel);
+		GridBagLayout gbl_bankex_data_panel = new GridBagLayout();
+		gbl_bankex_data_panel.columnWidths = new int[]{0, 0};
+		gbl_bankex_data_panel.rowHeights = new int[]{0, 0, 0, 0};
+		gbl_bankex_data_panel.columnWeights = new double[]{1.0, Double.MIN_VALUE};
+		gbl_bankex_data_panel.rowWeights = new double[]{1.0, 1.0, 1.0, Double.MIN_VALUE};
+		bankex_data_panel.setLayout(gbl_bankex_data_panel);
+		
+		JPanel panel_10 = new JPanel();
+		GridBagConstraints gbc_panel_10 = new GridBagConstraints();
+		gbc_panel_10.insets = new Insets(0, 0, 5, 0);
+		gbc_panel_10.fill = GridBagConstraints.BOTH;
+		gbc_panel_10.gridx = 0;
+		gbc_panel_10.gridy = 0;
+		bankex_data_panel.add(panel_10, gbc_panel_10);
+		panel_10.setLayout(new GridLayout(1, 0, 0, 0));
+		
+		JLabel bankex_high = new JLabel(bankexuprange);
+		bankex_high.setHorizontalAlignment(SwingConstants.CENTER);
+		panel_10.add(bankex_high);
+		
+		JPanel panel_11 = new JPanel();
+		GridBagConstraints gbc_panel_11 = new GridBagConstraints();
+		gbc_panel_11.insets = new Insets(0, 0, 5, 0);
+		gbc_panel_11.fill = GridBagConstraints.BOTH;
+		gbc_panel_11.gridx = 0;
+		gbc_panel_11.gridy = 1;
+		bankex_data_panel.add(panel_11, gbc_panel_11);
+		panel_11.setLayout(new GridLayout(1, 0, 0, 0));
+		
+		JLabel bankex_cmp = new JLabel(bankexstr);
+		bankex_cmp.setHorizontalAlignment(SwingConstants.CENTER);
+		panel_11.add(bankex_cmp);
+		
+		JPanel panel_12 = new JPanel();
+		GridBagConstraints gbc_panel_12 = new GridBagConstraints();
+		gbc_panel_12.fill = GridBagConstraints.BOTH;
+		gbc_panel_12.gridx = 0;
+		gbc_panel_12.gridy = 2;
+		bankex_data_panel.add(panel_12, gbc_panel_12);
+		panel_12.setLayout(new GridLayout(1, 0, 0, 0));
+		
+		JLabel bankex_low = new JLabel(bankexlowrange);
+		bankex_low.setHorizontalAlignment(SwingConstants.CENTER);
+		panel_12.add(bankex_low);
+		
+		
+		//Midcap
+		JPanel midcap_data_panel = new JPanel();
+		midcap_data_panel.setOpaque(false);
+		midcap_data_panel.setBorder(new LineBorder(new Color(0, 0, 0)));
+		Data_panel.add(midcap_data_panel);
+		GridBagLayout gbl_midcap_data_panel = new GridBagLayout();
+		gbl_midcap_data_panel.columnWidths = new int[]{0, 0};
+		gbl_midcap_data_panel.rowHeights = new int[]{0, 0, 0, 0};
+		gbl_midcap_data_panel.columnWeights = new double[]{1.0, Double.MIN_VALUE};
+		gbl_midcap_data_panel.rowWeights = new double[]{1.0, 1.0, 1.0, Double.MIN_VALUE};
+		midcap_data_panel.setLayout(gbl_midcap_data_panel);
+		
+		JPanel panel_10_1 = new JPanel();
+		GridBagConstraints gbc_panel_10_1 = new GridBagConstraints();
+		gbc_panel_10_1.fill = GridBagConstraints.BOTH;
+		gbc_panel_10_1.insets = new Insets(0, 0, 5, 0);
+		gbc_panel_10_1.gridx = 0;
+		gbc_panel_10_1.gridy = 0;
+		midcap_data_panel.add(panel_10_1, gbc_panel_10_1);
+		panel_10_1.setLayout(new GridLayout(1, 0, 0, 0));
+		
+		JLabel midcap_high = new JLabel(midcapuprange);
+		midcap_high.setHorizontalAlignment(SwingConstants.CENTER);
+		panel_10_1.add(midcap_high);
+		
+		JPanel panel_11_1 = new JPanel();
+		GridBagConstraints gbc_panel_11_1 = new GridBagConstraints();
+		gbc_panel_11_1.fill = GridBagConstraints.BOTH;
+		gbc_panel_11_1.insets = new Insets(0, 0, 5, 0);
+		gbc_panel_11_1.gridx = 0;
+		gbc_panel_11_1.gridy = 1;
+		midcap_data_panel.add(panel_11_1, gbc_panel_11_1);
+		panel_11_1.setLayout(new GridLayout(1, 0, 0, 0));
+		
+		JLabel midcap_cmp = new JLabel(midcapstr);
+		midcap_cmp.setHorizontalAlignment(SwingConstants.CENTER);
+		panel_11_1.add(midcap_cmp);
+		
+		JPanel panel_12_1 = new JPanel();
+		GridBagConstraints gbc_panel_12_1 = new GridBagConstraints();
+		gbc_panel_12_1.fill = GridBagConstraints.BOTH;
+		gbc_panel_12_1.gridx = 0;
+		gbc_panel_12_1.gridy = 2;
+		midcap_data_panel.add(panel_12_1, gbc_panel_12_1);
+		panel_12_1.setLayout(new GridLayout(1, 0, 0, 0));
+		
+		JLabel midcap_low = new JLabel(midcaplowrange);
+		midcap_low.setHorizontalAlignment(SwingConstants.CENTER);
+		panel_12_1.add(midcap_low);
+		
+		
+		//FinNifty
+		JPanel finnifty_data_panel = new JPanel();
+		finnifty_data_panel.setOpaque(false);
+		finnifty_data_panel.setBorder(new LineBorder(new Color(0, 0, 0)));
+		Data_panel.add(finnifty_data_panel);
+		GridBagLayout gbl_finnifty_data_panel = new GridBagLayout();
+		gbl_finnifty_data_panel.columnWidths = new int[]{0, 0};
+		gbl_finnifty_data_panel.rowHeights = new int[]{0, 0, 0, 0};
+		gbl_finnifty_data_panel.columnWeights = new double[]{1.0, Double.MIN_VALUE};
+		gbl_finnifty_data_panel.rowWeights = new double[]{1.0, 1.0, 1.0, Double.MIN_VALUE};
+		finnifty_data_panel.setLayout(gbl_finnifty_data_panel);
+		
+		JPanel panel_10_2 = new JPanel();
+		GridBagConstraints gbc_panel_10_2 = new GridBagConstraints();
+		gbc_panel_10_2.fill = GridBagConstraints.BOTH;
+		gbc_panel_10_2.insets = new Insets(0, 0, 5, 0);
+		gbc_panel_10_2.gridx = 0;
+		gbc_panel_10_2.gridy = 0;
+		finnifty_data_panel.add(panel_10_2, gbc_panel_10_2);
+		panel_10_2.setLayout(new GridLayout(1, 0, 0, 0));
+		
+		JLabel finnifty_high = new JLabel(finniftyuprange);
+		finnifty_high.setHorizontalAlignment(SwingConstants.CENTER);
+		panel_10_2.add(finnifty_high);
+		
+		JPanel panel_11_2 = new JPanel();
+		GridBagConstraints gbc_panel_11_2 = new GridBagConstraints();
+		gbc_panel_11_2.fill = GridBagConstraints.BOTH;
+		gbc_panel_11_2.insets = new Insets(0, 0, 5, 0);
+		gbc_panel_11_2.gridx = 0;
+		gbc_panel_11_2.gridy = 1;
+		finnifty_data_panel.add(panel_11_2, gbc_panel_11_2);
+		panel_11_2.setLayout(new GridLayout(1, 0, 0, 0));
+		
+		JLabel finnifty_cmp = new JLabel(finniftystr);
+		finnifty_cmp.setHorizontalAlignment(SwingConstants.CENTER);
+		panel_11_2.add(finnifty_cmp);
+		
+		JPanel panel_12_2 = new JPanel();
+		GridBagConstraints gbc_panel_12_2 = new GridBagConstraints();
+		gbc_panel_12_2.fill = GridBagConstraints.BOTH;
+		gbc_panel_12_2.gridx = 0;
+		gbc_panel_12_2.gridy = 2;
+		finnifty_data_panel.add(panel_12_2, gbc_panel_12_2);
+		panel_12_2.setLayout(new GridLayout(1, 0, 0, 0));
+		
+		JLabel finnifty_low = new JLabel(finniftylowrange);
+		finnifty_low.setHorizontalAlignment(SwingConstants.CENTER);
+		panel_12_2.add(finnifty_low);
+		
+		
+		//BankNifty
+		JPanel banknifty_data_panel = new JPanel();
+		banknifty_data_panel.setOpaque(false);
+		banknifty_data_panel.setBorder(new LineBorder(new Color(0, 0, 0)));
+		Data_panel.add(banknifty_data_panel);
+		GridBagLayout gbl_banknifty_data_panel = new GridBagLayout();
+		gbl_banknifty_data_panel.columnWidths = new int[]{0, 0};
+		gbl_banknifty_data_panel.rowHeights = new int[]{0, 0, 0, 0};
+		gbl_banknifty_data_panel.columnWeights = new double[]{1.0, Double.MIN_VALUE};
+		gbl_banknifty_data_panel.rowWeights = new double[]{1.0, 1.0, 1.0, Double.MIN_VALUE};
+		banknifty_data_panel.setLayout(gbl_banknifty_data_panel);
+		
+		JPanel panel_10_3 = new JPanel();
+		GridBagConstraints gbc_panel_10_3 = new GridBagConstraints();
+		gbc_panel_10_3.fill = GridBagConstraints.BOTH;
+		gbc_panel_10_3.insets = new Insets(0, 0, 5, 0);
+		gbc_panel_10_3.gridx = 0;
+		gbc_panel_10_3.gridy = 0;
+		banknifty_data_panel.add(panel_10_3, gbc_panel_10_3);
+		panel_10_3.setLayout(new GridLayout(1, 0, 0, 0));
+		
+		JLabel banknifty_high = new JLabel(bankniftyuprange);
+		banknifty_high.setHorizontalAlignment(SwingConstants.CENTER);
+		panel_10_3.add(banknifty_high);
+		
+		JPanel panel_11_3 = new JPanel();
+		GridBagConstraints gbc_panel_11_3 = new GridBagConstraints();
+		gbc_panel_11_3.fill = GridBagConstraints.BOTH;
+		gbc_panel_11_3.insets = new Insets(0, 0, 5, 0);
+		gbc_panel_11_3.gridx = 0;
+		gbc_panel_11_3.gridy = 1;
+		banknifty_data_panel.add(panel_11_3, gbc_panel_11_3);
+		panel_11_3.setLayout(new GridLayout(1, 0, 0, 0));
+		
+		JLabel banknifty_cmp = new JLabel(bankniftystr);
+		banknifty_cmp.setHorizontalAlignment(SwingConstants.CENTER);
+		panel_11_3.add(banknifty_cmp);
+		
+		JPanel panel_12_3 = new JPanel();
+		GridBagConstraints gbc_panel_12_3 = new GridBagConstraints();
+		gbc_panel_12_3.fill = GridBagConstraints.BOTH;
+		gbc_panel_12_3.gridx = 0;
+		gbc_panel_12_3.gridy = 2;
+		banknifty_data_panel.add(panel_12_3, gbc_panel_12_3);
+		panel_12_3.setLayout(new GridLayout(1, 0, 0, 0));
+		
+		JLabel banknifty_low = new JLabel(bankniftylowrange);
+		banknifty_low.setHorizontalAlignment(SwingConstants.CENTER);
+		panel_12_3.add(banknifty_low);
+		
+		
+		//Mifty50
+		JPanel nifty50_data_panel = new JPanel();
+		nifty50_data_panel.setOpaque(false);
+		nifty50_data_panel.setBorder(new LineBorder(new Color(0, 0, 0)));
+		Data_panel.add(nifty50_data_panel);
+		GridBagLayout gbl_nifty50_data_panel = new GridBagLayout();
+		gbl_nifty50_data_panel.columnWidths = new int[]{0, 0};
+		gbl_nifty50_data_panel.rowHeights = new int[]{0, 0, 0, 0};
+		gbl_nifty50_data_panel.columnWeights = new double[]{1.0, Double.MIN_VALUE};
+		gbl_nifty50_data_panel.rowWeights = new double[]{1.0, 1.0, 1.0, Double.MIN_VALUE};
+		nifty50_data_panel.setLayout(gbl_nifty50_data_panel);
+		
+		JPanel panel_10_4 = new JPanel();
+		GridBagConstraints gbc_panel_10_4 = new GridBagConstraints();
+		gbc_panel_10_4.fill = GridBagConstraints.BOTH;
+		gbc_panel_10_4.insets = new Insets(0, 0, 5, 0);
+		gbc_panel_10_4.gridx = 0;
+		gbc_panel_10_4.gridy = 0;
+		nifty50_data_panel.add(panel_10_4, gbc_panel_10_4);
+		panel_10_4.setLayout(new GridLayout(1, 0, 0, 0));
+		
+		JLabel nifty50_high = new JLabel(nifty50uprange);
+		nifty50_high.setHorizontalAlignment(SwingConstants.CENTER);
+		panel_10_4.add(nifty50_high);
+		
+		JPanel panel_11_4 = new JPanel();
+		GridBagConstraints gbc_panel_11_4 = new GridBagConstraints();
+		gbc_panel_11_4.fill = GridBagConstraints.BOTH;
+		gbc_panel_11_4.insets = new Insets(0, 0, 5, 0);
+		gbc_panel_11_4.gridx = 0;
+		gbc_panel_11_4.gridy = 1;
+		nifty50_data_panel.add(panel_11_4, gbc_panel_11_4);
+		panel_11_4.setLayout(new GridLayout(1, 0, 0, 0));
+		
+		JLabel nifty50_cmp = new JLabel(nifty50str);
+		nifty50_cmp.setHorizontalAlignment(SwingConstants.CENTER);
+		panel_11_4.add(nifty50_cmp);
+		
+		JPanel panel_12_4 = new JPanel();
+		GridBagConstraints gbc_panel_12_4 = new GridBagConstraints();
+		gbc_panel_12_4.fill = GridBagConstraints.BOTH;
+		gbc_panel_12_4.gridx = 0;
+		gbc_panel_12_4.gridy = 2;
+		nifty50_data_panel.add(panel_12_4, gbc_panel_12_4);
+		panel_12_4.setLayout(new GridLayout(1, 0, 0, 0));
+		
+		JLabel nifty50_low = new JLabel(nifty50lowrange);
+		nifty50_low.setHorizontalAlignment(SwingConstants.CENTER);
+		panel_12_4.add(nifty50_low);
+		
+		//Sensex
+		JPanel sensex_data_panel = new JPanel();
+		sensex_data_panel.setOpaque(false);
+		sensex_data_panel.setBorder(new LineBorder(new Color(0, 0, 0)));
+		Data_panel.add(sensex_data_panel);
+		GridBagLayout gbl_sensex_data_panel = new GridBagLayout();
+		gbl_sensex_data_panel.columnWidths = new int[]{0, 0};
+		gbl_sensex_data_panel.rowHeights = new int[]{0, 0, 0, 0};
+		gbl_sensex_data_panel.columnWeights = new double[]{1.0, Double.MIN_VALUE};
+		gbl_sensex_data_panel.rowWeights = new double[]{1.0, 1.0, 1.0, Double.MIN_VALUE};
+		sensex_data_panel.setLayout(gbl_sensex_data_panel);
+		
+		JPanel panel_10_5 = new JPanel();
+		GridBagConstraints gbc_panel_10_5 = new GridBagConstraints();
+		gbc_panel_10_5.fill = GridBagConstraints.BOTH;
+		gbc_panel_10_5.insets = new Insets(0, 0, 5, 0);
+		gbc_panel_10_5.gridx = 0;
+		gbc_panel_10_5.gridy = 0;
+		sensex_data_panel.add(panel_10_5, gbc_panel_10_5);
+		panel_10_5.setLayout(new GridLayout(1, 0, 0, 0));
+		
+		JLabel sensex_high = new JLabel(sensexuprange);
+		sensex_high.setHorizontalAlignment(SwingConstants.CENTER);
+		panel_10_5.add(sensex_high);
+		
+		JPanel panel_11_5 = new JPanel();
+		GridBagConstraints gbc_panel_11_5 = new GridBagConstraints();
+		gbc_panel_11_5.fill = GridBagConstraints.BOTH;
+		gbc_panel_11_5.insets = new Insets(0, 0, 5, 0);
+		gbc_panel_11_5.gridx = 0;
+		gbc_panel_11_5.gridy = 1;
+		sensex_data_panel.add(panel_11_5, gbc_panel_11_5);
+		panel_11_5.setLayout(new GridLayout(1, 0, 0, 0));
+		
+		JLabel sensex_cmp = new JLabel(sensexstr);
+		sensex_cmp.setHorizontalAlignment(SwingConstants.CENTER);
+		panel_11_5.add(sensex_cmp);
+		
+		JPanel panel_12_5 = new JPanel();
+		GridBagConstraints gbc_panel_12_5 = new GridBagConstraints();
+		gbc_panel_12_5.fill = GridBagConstraints.BOTH;
+		gbc_panel_12_5.gridx = 0;
+		gbc_panel_12_5.gridy = 2;
+		sensex_data_panel.add(panel_12_5, gbc_panel_12_5);
+		panel_12_5.setLayout(new GridLayout(1, 0, 0, 0));
+		
+		JLabel sensex_low = new JLabel(sensexlowrange);
+		sensex_low.setHorizontalAlignment(SwingConstants.CENTER);
+		panel_12_5.add(sensex_low);
+		//Sensex
+		
 		
 		JPanel Name_panel = new JPanel();
 		Name_panel.setOpaque(false);
@@ -248,5 +690,4 @@ public class GUI_3 extends JFrame {
 		Report_panel.add(report_gradient, "name_33427031160699");
 		report_gradient.setLayout(null);
 	}
-
 }
