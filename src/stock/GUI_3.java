@@ -2,6 +2,7 @@ package stock;
 
 import java.awt.EventQueue;
 
+
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -36,10 +37,19 @@ import java.awt.event.ActionEvent;
 import javax.swing.Action;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
+import java.time.LocalTime;
 import java.awt.Insets;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class GUI_3 extends JFrame {
 	JTabbedPane tab_pane;
+	JPanel panel_6;
 	
 	String vixstr;
     String bankexstr;
@@ -120,6 +130,24 @@ public class GUI_3 extends JFrame {
 		midcapuprange = Function.getupRange(vixstr,midcapstr);
 		midcaplowrange = Function.getlowRange(vixstr,midcapstr);
 		
+		//basebadatafile
+		
+		String date = Function.getdate();
+		String filePath2 = "C:/Users/Eshaan Zahid/eclipse-workspace/StockAnalyser/data/"+date+"_stockdata.txt";
+        Path path2 = Paths.get(filePath2);
+		
+        if (!Files.exists(path2)) {
+            Files.createFile(path2);
+            
+            String fileContent = bankexuprange+" "+bankexlowrange+" "+midcapuprange+" "+midcaplowrange+" "+finniftyuprange+" "+finniftylowrange+" "+bankniftyuprange+" "+bankniftylowrange+" "+nifty50uprange+" "+nifty50lowrange+" "+sensexuprange+" "+sensexlowrange;
+            Files.write(path2, fileContent.getBytes(StandardCharsets.UTF_8), StandardOpenOption.WRITE);
+            //System.out.println("File created: " + path.getFileName());
+        }
+        else {
+        	
+        }
+			
+			
 		
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -166,7 +194,7 @@ public class GUI_3 extends JFrame {
 		Image photo2 = new ImageIcon(this.getClass().getResource("/report_icon.png")).getImage();
 		btn2.setOpaque(true);
 		btn2.setBackground(new Color(9, 9, 9));
-		btn2.setBounds(6, 290, 48, 50);
+		btn2.setBounds(6, 318, 48, 50);
 		Navigation_panel.add(btn2);
 		btn2.setIcon(new ImageIcon(photo2));
 		
@@ -274,6 +302,7 @@ public class GUI_3 extends JFrame {
 		bankex_data_panel.setLayout(gbl_bankex_data_panel);
 		
 		JPanel panel_10 = new JPanel();
+		panel_10.setOpaque(false);
 		GridBagConstraints gbc_panel_10 = new GridBagConstraints();
 		gbc_panel_10.insets = new Insets(0, 0, 5, 0);
 		gbc_panel_10.fill = GridBagConstraints.BOTH;
@@ -283,10 +312,14 @@ public class GUI_3 extends JFrame {
 		panel_10.setLayout(new GridLayout(1, 0, 0, 0));
 		
 		JLabel bankex_high = new JLabel(bankexuprange);
+		bankex_high.setBorder(new LineBorder(new Color(0, 0, 0)));
+		bankex_high.setForeground(new Color(255, 255, 255));
+		bankex_high.setFont(new Font("Monospaced", Font.BOLD, 18));
 		bankex_high.setHorizontalAlignment(SwingConstants.CENTER);
 		panel_10.add(bankex_high);
 		
 		JPanel panel_11 = new JPanel();
+		panel_11.setOpaque(false);
 		GridBagConstraints gbc_panel_11 = new GridBagConstraints();
 		gbc_panel_11.insets = new Insets(0, 0, 5, 0);
 		gbc_panel_11.fill = GridBagConstraints.BOTH;
@@ -296,10 +329,14 @@ public class GUI_3 extends JFrame {
 		panel_11.setLayout(new GridLayout(1, 0, 0, 0));
 		
 		JLabel bankex_cmp = new JLabel(bankexstr);
+		bankex_cmp.setBorder(new LineBorder(new Color(0, 0, 0)));
+		bankex_cmp.setForeground(new Color(255, 255, 255));
+		bankex_cmp.setFont(new Font("Monospaced", Font.BOLD, 18));
 		bankex_cmp.setHorizontalAlignment(SwingConstants.CENTER);
 		panel_11.add(bankex_cmp);
 		
 		JPanel panel_12 = new JPanel();
+		panel_12.setOpaque(false);
 		GridBagConstraints gbc_panel_12 = new GridBagConstraints();
 		gbc_panel_12.fill = GridBagConstraints.BOTH;
 		gbc_panel_12.gridx = 0;
@@ -308,6 +345,9 @@ public class GUI_3 extends JFrame {
 		panel_12.setLayout(new GridLayout(1, 0, 0, 0));
 		
 		JLabel bankex_low = new JLabel(bankexlowrange);
+		bankex_low.setBorder(new LineBorder(new Color(0, 0, 0)));
+		bankex_low.setForeground(new Color(255, 255, 255));
+		bankex_low.setFont(new Font("Monospaced", Font.BOLD, 18));
 		bankex_low.setHorizontalAlignment(SwingConstants.CENTER);
 		panel_12.add(bankex_low);
 		
@@ -325,6 +365,7 @@ public class GUI_3 extends JFrame {
 		midcap_data_panel.setLayout(gbl_midcap_data_panel);
 		
 		JPanel panel_10_1 = new JPanel();
+		panel_10_1.setOpaque(false);
 		GridBagConstraints gbc_panel_10_1 = new GridBagConstraints();
 		gbc_panel_10_1.fill = GridBagConstraints.BOTH;
 		gbc_panel_10_1.insets = new Insets(0, 0, 5, 0);
@@ -334,10 +375,14 @@ public class GUI_3 extends JFrame {
 		panel_10_1.setLayout(new GridLayout(1, 0, 0, 0));
 		
 		JLabel midcap_high = new JLabel(midcapuprange);
+		midcap_high.setBorder(new LineBorder(new Color(0, 0, 0)));
+		midcap_high.setForeground(new Color(255, 255, 255));
+		midcap_high.setFont(new Font("Monospaced", Font.BOLD, 18));
 		midcap_high.setHorizontalAlignment(SwingConstants.CENTER);
 		panel_10_1.add(midcap_high);
 		
 		JPanel panel_11_1 = new JPanel();
+		panel_11_1.setOpaque(false);
 		GridBagConstraints gbc_panel_11_1 = new GridBagConstraints();
 		gbc_panel_11_1.fill = GridBagConstraints.BOTH;
 		gbc_panel_11_1.insets = new Insets(0, 0, 5, 0);
@@ -347,10 +392,14 @@ public class GUI_3 extends JFrame {
 		panel_11_1.setLayout(new GridLayout(1, 0, 0, 0));
 		
 		JLabel midcap_cmp = new JLabel(midcapstr);
+		midcap_cmp.setBorder(new LineBorder(new Color(0, 0, 0)));
+		midcap_cmp.setForeground(new Color(255, 255, 255));
+		midcap_cmp.setFont(new Font("Monospaced", Font.BOLD, 18));
 		midcap_cmp.setHorizontalAlignment(SwingConstants.CENTER);
 		panel_11_1.add(midcap_cmp);
 		
 		JPanel panel_12_1 = new JPanel();
+		panel_12_1.setOpaque(false);
 		GridBagConstraints gbc_panel_12_1 = new GridBagConstraints();
 		gbc_panel_12_1.fill = GridBagConstraints.BOTH;
 		gbc_panel_12_1.gridx = 0;
@@ -359,6 +408,9 @@ public class GUI_3 extends JFrame {
 		panel_12_1.setLayout(new GridLayout(1, 0, 0, 0));
 		
 		JLabel midcap_low = new JLabel(midcaplowrange);
+		midcap_low.setBorder(new LineBorder(new Color(0, 0, 0)));
+		midcap_low.setForeground(new Color(255, 255, 255));
+		midcap_low.setFont(new Font("Monospaced", Font.BOLD, 18));
 		midcap_low.setHorizontalAlignment(SwingConstants.CENTER);
 		panel_12_1.add(midcap_low);
 		
@@ -376,6 +428,7 @@ public class GUI_3 extends JFrame {
 		finnifty_data_panel.setLayout(gbl_finnifty_data_panel);
 		
 		JPanel panel_10_2 = new JPanel();
+		panel_10_2.setOpaque(false);
 		GridBagConstraints gbc_panel_10_2 = new GridBagConstraints();
 		gbc_panel_10_2.fill = GridBagConstraints.BOTH;
 		gbc_panel_10_2.insets = new Insets(0, 0, 5, 0);
@@ -385,10 +438,14 @@ public class GUI_3 extends JFrame {
 		panel_10_2.setLayout(new GridLayout(1, 0, 0, 0));
 		
 		JLabel finnifty_high = new JLabel(finniftyuprange);
+		finnifty_high.setBorder(new LineBorder(new Color(0, 0, 0)));
+		finnifty_high.setForeground(new Color(255, 255, 255));
+		finnifty_high.setFont(new Font("Monospaced", Font.BOLD, 18));
 		finnifty_high.setHorizontalAlignment(SwingConstants.CENTER);
 		panel_10_2.add(finnifty_high);
 		
 		JPanel panel_11_2 = new JPanel();
+		panel_11_2.setOpaque(false);
 		GridBagConstraints gbc_panel_11_2 = new GridBagConstraints();
 		gbc_panel_11_2.fill = GridBagConstraints.BOTH;
 		gbc_panel_11_2.insets = new Insets(0, 0, 5, 0);
@@ -398,10 +455,14 @@ public class GUI_3 extends JFrame {
 		panel_11_2.setLayout(new GridLayout(1, 0, 0, 0));
 		
 		JLabel finnifty_cmp = new JLabel(finniftystr);
+		finnifty_cmp.setBorder(new LineBorder(new Color(0, 0, 0)));
+		finnifty_cmp.setForeground(new Color(255, 255, 255));
+		finnifty_cmp.setFont(new Font("Monospaced", Font.BOLD, 18));
 		finnifty_cmp.setHorizontalAlignment(SwingConstants.CENTER);
 		panel_11_2.add(finnifty_cmp);
 		
 		JPanel panel_12_2 = new JPanel();
+		panel_12_2.setOpaque(false);
 		GridBagConstraints gbc_panel_12_2 = new GridBagConstraints();
 		gbc_panel_12_2.fill = GridBagConstraints.BOTH;
 		gbc_panel_12_2.gridx = 0;
@@ -410,6 +471,9 @@ public class GUI_3 extends JFrame {
 		panel_12_2.setLayout(new GridLayout(1, 0, 0, 0));
 		
 		JLabel finnifty_low = new JLabel(finniftylowrange);
+		finnifty_low.setBorder(new LineBorder(new Color(0, 0, 0)));
+		finnifty_low.setForeground(new Color(255, 255, 255));
+		finnifty_low.setFont(new Font("Monospaced", Font.BOLD, 18));
 		finnifty_low.setHorizontalAlignment(SwingConstants.CENTER);
 		panel_12_2.add(finnifty_low);
 		
@@ -427,6 +491,7 @@ public class GUI_3 extends JFrame {
 		banknifty_data_panel.setLayout(gbl_banknifty_data_panel);
 		
 		JPanel panel_10_3 = new JPanel();
+		panel_10_3.setOpaque(false);
 		GridBagConstraints gbc_panel_10_3 = new GridBagConstraints();
 		gbc_panel_10_3.fill = GridBagConstraints.BOTH;
 		gbc_panel_10_3.insets = new Insets(0, 0, 5, 0);
@@ -436,10 +501,14 @@ public class GUI_3 extends JFrame {
 		panel_10_3.setLayout(new GridLayout(1, 0, 0, 0));
 		
 		JLabel banknifty_high = new JLabel(bankniftyuprange);
+		banknifty_high.setBorder(new LineBorder(new Color(0, 0, 0)));
+		banknifty_high.setForeground(new Color(255, 255, 255));
+		banknifty_high.setFont(new Font("Monospaced", Font.BOLD, 18));
 		banknifty_high.setHorizontalAlignment(SwingConstants.CENTER);
 		panel_10_3.add(banknifty_high);
 		
 		JPanel panel_11_3 = new JPanel();
+		panel_11_3.setOpaque(false);
 		GridBagConstraints gbc_panel_11_3 = new GridBagConstraints();
 		gbc_panel_11_3.fill = GridBagConstraints.BOTH;
 		gbc_panel_11_3.insets = new Insets(0, 0, 5, 0);
@@ -449,10 +518,14 @@ public class GUI_3 extends JFrame {
 		panel_11_3.setLayout(new GridLayout(1, 0, 0, 0));
 		
 		JLabel banknifty_cmp = new JLabel(bankniftystr);
+		banknifty_cmp.setBorder(new LineBorder(new Color(0, 0, 0)));
+		banknifty_cmp.setForeground(new Color(255, 255, 255));
+		banknifty_cmp.setFont(new Font("Monospaced", Font.BOLD, 18));
 		banknifty_cmp.setHorizontalAlignment(SwingConstants.CENTER);
 		panel_11_3.add(banknifty_cmp);
 		
 		JPanel panel_12_3 = new JPanel();
+		panel_12_3.setOpaque(false);
 		GridBagConstraints gbc_panel_12_3 = new GridBagConstraints();
 		gbc_panel_12_3.fill = GridBagConstraints.BOTH;
 		gbc_panel_12_3.gridx = 0;
@@ -461,6 +534,9 @@ public class GUI_3 extends JFrame {
 		panel_12_3.setLayout(new GridLayout(1, 0, 0, 0));
 		
 		JLabel banknifty_low = new JLabel(bankniftylowrange);
+		banknifty_low.setBorder(new LineBorder(new Color(0, 0, 0)));
+		banknifty_low.setForeground(new Color(255, 255, 255));
+		banknifty_low.setFont(new Font("Monospaced", Font.BOLD, 18));
 		banknifty_low.setHorizontalAlignment(SwingConstants.CENTER);
 		panel_12_3.add(banknifty_low);
 		
@@ -478,6 +554,7 @@ public class GUI_3 extends JFrame {
 		nifty50_data_panel.setLayout(gbl_nifty50_data_panel);
 		
 		JPanel panel_10_4 = new JPanel();
+		panel_10_4.setOpaque(false);
 		GridBagConstraints gbc_panel_10_4 = new GridBagConstraints();
 		gbc_panel_10_4.fill = GridBagConstraints.BOTH;
 		gbc_panel_10_4.insets = new Insets(0, 0, 5, 0);
@@ -487,10 +564,14 @@ public class GUI_3 extends JFrame {
 		panel_10_4.setLayout(new GridLayout(1, 0, 0, 0));
 		
 		JLabel nifty50_high = new JLabel(nifty50uprange);
+		nifty50_high.setBorder(new LineBorder(new Color(0, 0, 0)));
+		nifty50_high.setForeground(new Color(255, 255, 255));
+		nifty50_high.setFont(new Font("Monospaced", Font.BOLD, 18));
 		nifty50_high.setHorizontalAlignment(SwingConstants.CENTER);
 		panel_10_4.add(nifty50_high);
 		
 		JPanel panel_11_4 = new JPanel();
+		panel_11_4.setOpaque(false);
 		GridBagConstraints gbc_panel_11_4 = new GridBagConstraints();
 		gbc_panel_11_4.fill = GridBagConstraints.BOTH;
 		gbc_panel_11_4.insets = new Insets(0, 0, 5, 0);
@@ -500,10 +581,14 @@ public class GUI_3 extends JFrame {
 		panel_11_4.setLayout(new GridLayout(1, 0, 0, 0));
 		
 		JLabel nifty50_cmp = new JLabel(nifty50str);
+		nifty50_cmp.setBorder(new LineBorder(new Color(0, 0, 0)));
+		nifty50_cmp.setForeground(new Color(255, 255, 255));
+		nifty50_cmp.setFont(new Font("Monospaced", Font.BOLD, 18));
 		nifty50_cmp.setHorizontalAlignment(SwingConstants.CENTER);
 		panel_11_4.add(nifty50_cmp);
 		
 		JPanel panel_12_4 = new JPanel();
+		panel_12_4.setOpaque(false);
 		GridBagConstraints gbc_panel_12_4 = new GridBagConstraints();
 		gbc_panel_12_4.fill = GridBagConstraints.BOTH;
 		gbc_panel_12_4.gridx = 0;
@@ -512,6 +597,9 @@ public class GUI_3 extends JFrame {
 		panel_12_4.setLayout(new GridLayout(1, 0, 0, 0));
 		
 		JLabel nifty50_low = new JLabel(nifty50lowrange);
+		nifty50_low.setBorder(new LineBorder(new Color(0, 0, 0)));
+		nifty50_low.setForeground(new Color(255, 255, 255));
+		nifty50_low.setFont(new Font("Monospaced", Font.BOLD, 18));
 		nifty50_low.setHorizontalAlignment(SwingConstants.CENTER);
 		panel_12_4.add(nifty50_low);
 		
@@ -528,6 +616,7 @@ public class GUI_3 extends JFrame {
 		sensex_data_panel.setLayout(gbl_sensex_data_panel);
 		
 		JPanel panel_10_5 = new JPanel();
+		panel_10_5.setOpaque(false);
 		GridBagConstraints gbc_panel_10_5 = new GridBagConstraints();
 		gbc_panel_10_5.fill = GridBagConstraints.BOTH;
 		gbc_panel_10_5.insets = new Insets(0, 0, 5, 0);
@@ -537,10 +626,14 @@ public class GUI_3 extends JFrame {
 		panel_10_5.setLayout(new GridLayout(1, 0, 0, 0));
 		
 		JLabel sensex_high = new JLabel(sensexuprange);
+		sensex_high.setBorder(new LineBorder(new Color(0, 0, 0)));
+		sensex_high.setForeground(new Color(255, 255, 255));
+		sensex_high.setFont(new Font("Monospaced", Font.BOLD, 18));
 		sensex_high.setHorizontalAlignment(SwingConstants.CENTER);
 		panel_10_5.add(sensex_high);
 		
 		JPanel panel_11_5 = new JPanel();
+		panel_11_5.setOpaque(false);
 		GridBagConstraints gbc_panel_11_5 = new GridBagConstraints();
 		gbc_panel_11_5.fill = GridBagConstraints.BOTH;
 		gbc_panel_11_5.insets = new Insets(0, 0, 5, 0);
@@ -550,10 +643,14 @@ public class GUI_3 extends JFrame {
 		panel_11_5.setLayout(new GridLayout(1, 0, 0, 0));
 		
 		JLabel sensex_cmp = new JLabel(sensexstr);
+		sensex_cmp.setBorder(new LineBorder(new Color(0, 0, 0)));
+		sensex_cmp.setForeground(new Color(255, 255, 255));
+		sensex_cmp.setFont(new Font("Monospaced", Font.BOLD, 18));
 		sensex_cmp.setHorizontalAlignment(SwingConstants.CENTER);
 		panel_11_5.add(sensex_cmp);
 		
 		JPanel panel_12_5 = new JPanel();
+		panel_12_5.setOpaque(false);
 		GridBagConstraints gbc_panel_12_5 = new GridBagConstraints();
 		gbc_panel_12_5.fill = GridBagConstraints.BOTH;
 		gbc_panel_12_5.gridx = 0;
@@ -562,6 +659,9 @@ public class GUI_3 extends JFrame {
 		panel_12_5.setLayout(new GridLayout(1, 0, 0, 0));
 		
 		JLabel sensex_low = new JLabel(sensexlowrange);
+		sensex_low.setBorder(new LineBorder(new Color(0, 0, 0)));
+		sensex_low.setForeground(new Color(255, 255, 255));
+		sensex_low.setFont(new Font("Monospaced", Font.BOLD, 18));
 		sensex_low.setHorizontalAlignment(SwingConstants.CENTER);
 		panel_12_5.add(sensex_low);
 		//Sensex
@@ -600,7 +700,7 @@ public class GUI_3 extends JFrame {
 		JLabel Bankex_label = new JLabel("BANKEX");
 		Bankex_label.setHorizontalTextPosition(SwingConstants.CENTER);
 		Bankex_label.setHorizontalAlignment(SwingConstants.CENTER);
-		Bankex_label.setForeground(new Color(235, 235, 235));
+		Bankex_label.setForeground(new Color(254, 254, 205));
 		Bankex_label.setFont(new Font("Georgia", Font.BOLD, 18));
 		Bankex_label.setAlignmentX(0.5f);
 		nm_pnl_1.add(Bankex_label);
@@ -615,7 +715,7 @@ public class GUI_3 extends JFrame {
 		JLabel Midcap_label = new JLabel("MIDCAP");
 		Midcap_label.setHorizontalTextPosition(SwingConstants.CENTER);
 		Midcap_label.setHorizontalAlignment(SwingConstants.CENTER);
-		Midcap_label.setForeground(new Color(235, 235, 235));
+		Midcap_label.setForeground(new Color(254, 254, 205));
 		Midcap_label.setFont(new Font("Georgia", Font.BOLD, 18));
 		Midcap_label.setAlignmentX(0.5f);
 		nm_pnl_2.add(Midcap_label);
@@ -630,7 +730,7 @@ public class GUI_3 extends JFrame {
 		JLabel FinNifty_label = new JLabel("FIN NIFTY");
 		FinNifty_label.setHorizontalTextPosition(SwingConstants.CENTER);
 		FinNifty_label.setHorizontalAlignment(SwingConstants.CENTER);
-		FinNifty_label.setForeground(new Color(235, 235, 235));
+		FinNifty_label.setForeground(new Color(254, 254, 205));
 		FinNifty_label.setFont(new Font("Georgia", Font.BOLD, 18));
 		FinNifty_label.setAlignmentX(0.5f);
 		nm_pnl_3.add(FinNifty_label);
@@ -645,7 +745,7 @@ public class GUI_3 extends JFrame {
 		JLabel BankNifty_label = new JLabel("BANK NIFTY");
 		BankNifty_label.setHorizontalTextPosition(SwingConstants.CENTER);
 		BankNifty_label.setHorizontalAlignment(SwingConstants.CENTER);
-		BankNifty_label.setForeground(new Color(235, 235, 235));
+		BankNifty_label.setForeground(new Color(254, 254, 205));
 		BankNifty_label.setFont(new Font("Georgia", Font.BOLD, 18));
 		BankNifty_label.setAlignmentX(0.5f);
 		nm_pnl_4.add(BankNifty_label);
@@ -660,7 +760,7 @@ public class GUI_3 extends JFrame {
 		JLabel Nifty50_label = new JLabel("NIFTY 50");
 		Nifty50_label.setHorizontalTextPosition(SwingConstants.CENTER);
 		Nifty50_label.setHorizontalAlignment(SwingConstants.CENTER);
-		Nifty50_label.setForeground(new Color(235, 235, 235));
+		Nifty50_label.setForeground(new Color(254, 254, 205));
 		Nifty50_label.setFont(new Font("Georgia", Font.BOLD, 18));
 		Nifty50_label.setAlignmentX(0.5f);
 		nm_pnl_5.add(Nifty50_label);
@@ -675,7 +775,7 @@ public class GUI_3 extends JFrame {
 		JLabel Sensex_label = new JLabel("SENSEX");
 		Sensex_label.setHorizontalTextPosition(SwingConstants.CENTER);
 		Sensex_label.setHorizontalAlignment(SwingConstants.CENTER);
-		Sensex_label.setForeground(new Color(235, 235, 235));
+		Sensex_label.setForeground(new Color(254, 254, 205));
 		Sensex_label.setFont(new Font("Georgia", Font.BOLD, 18));
 		Sensex_label.setAlignmentX(0.5f);
 		nm_pnl_6.add(Sensex_label);
@@ -687,7 +787,108 @@ public class GUI_3 extends JFrame {
 		Report_panel.setLayout(new CardLayout(0, 0));
 		
 		KGradientPanel report_gradient = new KGradientPanel();
+		report_gradient.setkStartColor(new Color(9, 9, 9));
+		report_gradient.setkEndColor(new Color(0, 20, 32));
 		Report_panel.add(report_gradient, "name_33427031160699");
 		report_gradient.setLayout(null);
+		
+		JPanel panel = new JPanel();
+		panel.setOpaque(false);
+		panel.setBounds(6, 6, 990, 190);
+		report_gradient.add(panel);
+		panel.setLayout(new GridLayout(1, 0, 0, 0));
+		
+		JPanel yest_rprt = new JPanel();
+		yest_rprt.setBackground(new Color(0, 0, 0));
+		yest_rprt.setOpaque(false);
+		panel.add(yest_rprt);
+		yest_rprt.setLayout(null);
+		
+		JPanel panel_1 = new JPanel();
+		panel_1.setBounds(6, 6, 318, 178);
+		yest_rprt.add(panel_1);
+		panel_1.setLayout(null);
+		
+		KGradientPanel gradientPanel_1 = new KGradientPanel();
+		gradientPanel_1.setBounds(6, 5, 306, 167);
+		panel_1.add(gradientPanel_1);
+		
+		JPanel today_rprt = new JPanel();
+		today_rprt.setOpaque(false);
+		panel.add(today_rprt);
+		today_rprt.setLayout(null);
+		
+		JPanel panel_2 = new JPanel();
+		panel_2.setBounds(6, 6, 318, 178);
+		today_rprt.add(panel_2);
+		panel_2.setLayout(null);
+		
+		KGradientPanel gradientPanel_2 = new KGradientPanel();
+		gradientPanel_2.setkStartColor(new Color(0, 0, 255));
+		gradientPanel_2.setBounds(6, 6, 306, 166);
+		panel_2.add(gradientPanel_2);
+		
+		JPanel weekly_rprt = new JPanel();
+		weekly_rprt.setOpaque(false);
+		panel.add(weekly_rprt);
+		weekly_rprt.setLayout(null);
+		
+		JPanel panel_3 = new JPanel();
+		panel_3.setBounds(6, 6, 318, 178);
+		weekly_rprt.add(panel_3);
+		panel_3.setLayout(null);
+		
+		KGradientPanel gradientPanel_3 = new KGradientPanel();
+		gradientPanel_3.setBounds(6, 6, 306, 166);
+		panel_3.add(gradientPanel_3);
+		
+		JPanel panel_4 = new JPanel();
+		panel_4.setBounds(779, 423, 217, 58);
+		report_gradient.add(panel_4);
+		panel_4.setLayout(new GridLayout(1, 0, 0, 0));
+		
+		JButton btnNewButton = new JButton("Report");
+		btnNewButton.addMouseListener(new MouseAdapter() {
+		});
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				LocalTime checkTime = LocalTime.of(15, 25);
+				LocalTime currentTime = LocalTime.now();
+				if (currentTime.isAfter(checkTime)) {
+					try {
+						Storage_operations.Createbasefile();
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					//green
+				    panel_6.setBackground(new Color(0, 255, 0));
+				    
+				} else {
+				    panel_6.setBackground(new Color(255, 0, 0));
+				}
+				
+				
+				;
+			}
+		});
+		panel_4.add(btnNewButton);
+		
+		JPanel panel_5 = new JPanel();
+		panel_4.add(panel_5);
+		panel_5.setLayout(null);
+		
+		panel_6 = new JPanel();
+		String filePath = "C:/Users/Eshaan Zahid/eclipse-workspace/StockAnalyser/data/report/"+date+".txt";
+        Path path = Paths.get(filePath);
+        
+		if (!Files.exists(path)) {
+			panel_6.setBackground(new Color(255, 0, 0));
+		}
+		else {
+			panel_6.setBackground(new Color(0, 255, 0));
+		}
+		panel_6.setBounds(6, 6, 96, 46);
+		panel_5.add(panel_6);
 	}
 }

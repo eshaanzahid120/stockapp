@@ -155,6 +155,10 @@ public class Function
 	    return sensex;
 	  }
 	  
+	  
+	  //time handling
+	  
+	  
 	  public static String getsec()throws IOException{
 	    LocalTime currentTime = LocalTime.now();
 	    int sec = currentTime.getSecond();
@@ -182,8 +186,14 @@ public class Function
 	      
 	      // Format the date using the formatter
 	      String formattedDate = currentDate.format(formatter);
+	      //String temp = "29-05-2024";
 	    return formattedDate;
+	    //return temp;
 	  }
+	  
+	  
+	  //--------------------
+	  
 	  
 	  public static void main(String[] args) throws IOException {
 		    
